@@ -18,8 +18,8 @@ import java.io.Serializable;
 public class Miembros implements Serializable {
 
     @Id
-    @Column(name = "id_atletas")
-    private  String id_atletas;
+    @Column(name = "id_atleta")
+    private  String id_atleta;
     @Column(name = "cumplenos")
     private String cumpleanos;
     @Column(name="nombre")

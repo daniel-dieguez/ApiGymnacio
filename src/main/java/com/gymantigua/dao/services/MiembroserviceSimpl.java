@@ -1,6 +1,7 @@
 package com.gymantigua.dao.services;
 
 import com.gymantigua.dao.IMiembrosDao;
+import com.gymantigua.dao.services.IMiembroService;
 import com.gymantigua.models.models.Miembros;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
