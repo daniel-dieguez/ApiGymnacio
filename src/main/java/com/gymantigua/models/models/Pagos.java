@@ -22,6 +22,8 @@ public class Pagos implements Serializable {
     @Column(name = "id_pago")
     private String id_pago;
     @Column(name = "id_atleta")
+    private String id_atleta;
+    @Column(name = "metodo_pago")
     private String metodo_pago;
     @Column(name = "estado_de_pago")
     private String estado_de_pago;

@@ -11,7 +11,22 @@ import java.io.Serializable;
 @Data
 public class MiembrosDTO implements Serializable {
 
-    @NotEmpty(message = "Recuerda que el campo debe de estar lleno")
-    private String id_miembro;
+
+    @NotEmpty(message = "Nombre no debe de estar vacio")
+    private String nombre;
+   @NotEmpty(message = "Recuerda que el campo cumpleaños debe de estar lleno")
+    private String cumpleanos;
+    @NotEmpty(message = "Recuerda el telefono no vacio")
+    private String telefono;
+    @NotEmpty(message = "Recuerda que objetivo debe de ser")
+   private String objetivo;
+    @NotEmpty(message = "Recuerda que genero hay dos papi")
+    private String genero;
+    @NotEmpty(message = "Recuerda que hay que pagar mensualidad ")
+    private String mensualidad;
+
+
+
+
 
 }

@@ -1,8 +1,10 @@
 package com.gymantigua.controllers;
 
 
-import com.gymantigua.dao.services.IMiembroService;
+import com.gymantigua.dao.services.IMetasServices;
+import com.gymantigua.models.entities.MetasDTO;
 import com.gymantigua.models.entities.MiembrosDTO;
+import com.gymantigua.models.models.Metas;
 import com.gymantigua.models.models.Miembros;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +20,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,51 +27,26 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/gimnacio/v2/miembros")
-public class MiembrosController {
+@RequestMapping(value = "/gimnacio/v6/metas")
+public class MetasControllers {
 
     @Autowired
-    private IMiembroService iMiembroService;
+    private IMetasServices iMetasServices;
 
-    private Logger logger = LoggerFactory.getLogger(MiembrosController.class);
-
+    private Logger logger = LoggerFactory.getLogger(MetasControllers.class);
 
     @GetMapping
-    public ResponseEntity<?> ListaMiembros() {
+    public ResponseEntity<?> ListaMetas(){
         Map<String, Object> response = new HashMap<>();
-        this.logger.debug("inicinado el proceso de consulta de miebro");
-        try {
-            List<Miembros> miembros = this.iMiembroService.findAll();
-            if(miembros == null && miembros.isEmpty()){
-                logger.warn("no existe registro para la entidad");
+        this.logger.debug("Iniciamos con la consulta de metas");
+        try{
+            List<Metas> metas = this.iMetasServices.findAll();
+            if(metas == null && metas.isEmpty()){
+                logger.info("No existe ningun dato de metas");
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }else{
-                logger.info("Se ejecuta la consulta");
-                return new ResponseEntity<List<Miembros>>(miembros, HttpStatus.OK);
-            }
-
-    }catch (CannotCreateTransactionException e){
-            response = this.getTransactionExepcion(response, e);
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
-        }catch(DataAccessException e){
-            response = this.getDataAccessException(response, e);
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
-
-        }
-    }
-
-    @GetMapping("/page/{page}")
-    public ResponseEntity<?> ListarMiembrosByPage(@PathVariable Integer page){
-        Map<String, Object> response = new HashMap<>();
-        try{
-            Pageable pageable = PageRequest.of(page, 5);//indicaremos el tamano de la pagina (el size 5) es la cantidad el avariable
-            Page<Miembros> miembrosPage = iMiembroService.findAll(pageable);
-            if(miembrosPage == null || miembrosPage.getSize() == 0){
-                logger.warn("no existe registro en la tabla de metas");
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }else {
-                logger.info("se realizo la consulta de enlistar por consulta");
-                return new ResponseEntity<Page<Miembros>>(miembrosPage, HttpStatus.OK);
+                logger.info("se ejecuto bien la consulta de metas");
+                return new ResponseEntity<List<Metas>>(metas, HttpStatus.OK);
             }
 
         }catch (CannotCreateTransactionException e){
@@ -83,35 +59,60 @@ public class MiembrosController {
         }
     }
 
+
+    @GetMapping("/page/{page}")
+    public ResponseEntity<?> ListarMetasByPage(@PathVariable Integer page){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            Pageable pageable = PageRequest.of(page, 5);//indicaremos el tamano de la pagina (el size 5) es la cantidad el avariable
+            Page<Metas> metasPage = iMetasServices.findAll(pageable);
+            if(metasPage == null || metasPage.getSize() == 0){
+                logger.warn("no existe registro en la tabla de metas");
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }else {
+                logger.info("se realizo la consulta de enlistar por consulta");
+                return new ResponseEntity<Page<Metas>>(metasPage, HttpStatus.OK);
+            }
+
+        }catch (CannotCreateTransactionException e){
+            response = this.getTransactionExepcion(response, e);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+        }catch(DataAccessException e){
+            response = this.getDataAccessException(response, e);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+
+        }
+    }
+
+
     @GetMapping("{atletaId}")
-    public  ResponseEntity<?> showMiembros(@PathVariable String atletaId){ //VERIFIQUEMOS ESTE DATO
+    public  ResponseEntity<?> showMetas(@PathVariable String atletaId){ //VERIFIQUEMOS ESTE DATO
         Map<String, Object> response = new HashMap<>();
         logger.debug("inica el proceso para la busqueda del Id".concat(atletaId));
         try{
-            Miembros miembros = this.iMiembroService.findById(atletaId);
-            if(miembros == null){
+            Metas metas = this.iMetasServices.findById(atletaId);
+            if(metas == null){
                 logger.warn("no existe ese atleta con el Id");
                 response.put("mesaje", "No existe el atleta con el id".concat(atletaId));
                 return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
             }else{
                 logger.info("se proceso la busqueda de laa forma correcta");
-                return new ResponseEntity<Miembros>(miembros, HttpStatus.OK);
+                return new ResponseEntity<Metas>(metas, HttpStatus.OK);
 
             }
 
         }catch (CannotCreateTransactionException e){
-        response = this.getTransactionExepcion(response, e);
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
-    }catch(DataAccessException e){
-        response = this.getDataAccessException(response, e);
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+            response = this.getTransactionExepcion(response, e);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+        }catch(DataAccessException e){
+            response = this.getDataAccessException(response, e);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 
+        }
     }
-    }
-
 
     @PostMapping  //recuerda que el post es para agregar
-    public ResponseEntity<?> create (@Valid @RequestBody MiembrosDTO value, BindingResult result){//el bindingresulta para valdiad el campo de Dto //el body lo podremos ver en la parte del post
+    public ResponseEntity<?> create (@Valid @RequestBody MetasDTO value, BindingResult result){//el bindingresulta para valdiad el campo de Dto //el body lo podremos ver en la parte del post
         Map<String, Object> response = new HashMap<>();
         if(result.hasErrors() == true){ //.hasError para ver los errores
             List<String> errores = result.getFieldErrors().stream().map(error -> error.getDefaultMessage())
@@ -121,18 +122,15 @@ public class MiembrosController {
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            Miembros miembros = new Miembros();
-            miembros.setId_atleta(UUID.randomUUID().toString());
-            miembros.setNombre(value.getNombre());
-          miembros.setCumpleanos(value.getCumpleanos());   // Analizcemos el get, este viene del entities miembrosDTO
-           miembros.setTelefono(value.getTelefono());
-           miembros.setObjetivo(value.getObjetivo());
-           miembros.setMensualidad(value.getMensualidad());
-            this.iMiembroService.save(miembros);
+            Metas metas = new Metas();
+            metas.setId_atleta(UUID.randomUUID().toString());
+            metas.setObjetivo(value.getObjetivo());
+            this.iMetasServices.save(metas);
             logger.info("se acaba de creaer un nuevo miembro");
             response.put("mensaje", "Un nuevo miembro fue creado con exito ");
-            response.put("miembro ", miembros);
+            response.put("Meta ", metas);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+
         }catch (CannotCreateTransactionException e){
             response = this.getTransactionExepcion(response, e);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
@@ -144,41 +142,9 @@ public class MiembrosController {
         }
     }
 
-    ///---------------------------------
 
-    @PutMapping("{atletaId}")
-    public ResponseEntity<?>update(@Valid @RequestBody MiembrosDTO value, BindingResult result, @PathVariable String atletaId){
-        Map<String, Object> response = new HashMap<>();
-        if(result.hasErrors()){
-            List<String> errores = result.getFieldErrors().stream().map(error -> error.getDefaultMessage()).collect(Collectors.toList());
-            response.put("eorrres", errores);
-            logger.info("Se encotraron errores en la peticion ");
-            return new ResponseEntity<Map<String,Object>>(response, HttpStatus.BAD_REQUEST);
-        }
-        try{
-            Miembros miembros = this.iMiembroService.findById(atletaId);
-            if(miembros == null){
-                response.put("mensaje", "el nuevo miebro con el id".concat(atletaId).concat("no existe"));
-                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-            }else {
-                miembros.setNombre(value.getNombre());
-                this.iMiembroService.save(miembros);
-                response.put("mensaje","el miembro fue actualizado");
-                response.put("miembro ", miembros);
-                logger.info("el miebro fue actualizada con exito ");
-                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
-            }
 
-        }catch (CannotCreateTransactionException e){
-        response = this.getTransactionExepcion(response, e);
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
 
-    }catch (DataAccessException e){
-        response = this.getDataAccessException(response, e);
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
-
-    }
-    }
 
 
 
@@ -196,4 +162,7 @@ public class MiembrosController {
         return response;
 
     }
+
+
+
 }
