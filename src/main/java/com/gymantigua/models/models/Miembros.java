@@ -17,7 +17,8 @@ public class Miembros implements Serializable {
     @Id
     @Column(name = "id_atleta")
     private  String id_atleta;
-    @Column(name = "cumplenos")
+    //@Temporal(TemporalType.TIMESTAMP) //Date para guardar dia, timestamp para guardar dato, .Date -> fecha .TiME -> Guardara la hora pero no fecha, .TIMESTAMP ambas
+    @Column(name = "cumpleanos")
     private String cumpleanos;
     @Column(name="nombre")
     private String nombre;

@@ -14,5 +14,8 @@ public interface   IMiembroService {
     public Miembros save (Miembros miembros);
     public void delete(Miembros miembros);
 
+    // metodo que se creo que Dao
+    public List<Miembros> findMiembrosByTermino (String termino);
+
 
 }

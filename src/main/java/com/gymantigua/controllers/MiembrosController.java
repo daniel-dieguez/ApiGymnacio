@@ -182,6 +182,63 @@ public class MiembrosController {
 
 
 
+    @DeleteMapping("/{atletaId}")
+    public ResponseEntity<?> delete(@PathVariable String atletaId){
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Miembros miembros = this.iMiembroService.findById(atletaId);
+            if(miembros == null){
+                response.put("mensaje", "El miembro con el Id".concat(atletaId).concat("no existe"));
+                return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
+            }else {
+                this.iMiembroService.delete(miembros);
+                response.put("mensaje","el miembro con el id".concat(atletaId).concat("fue eliminado "));
+                response.put("miembro ",miembros);
+                logger.info("El miembro fue eliminada con exito");
+                return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+            }
+        }catch (CannotCreateTransactionException e){
+        response = this.getTransactionExepcion(response, e);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+
+    }catch (DataAccessException e){
+        response = this.getDataAccessException(response, e);
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+
+    }
+    }
+
+
+
+    // query params para la creacion de parametros de busqueda
+
+    @GetMapping("/search")
+    public ResponseEntity<?> ListarNombrePorTerminino(@RequestParam("termino") String termino){
+        Map<String, Object> response = new HashMap<>();
+        try{
+        List<Miembros> miembros = this.iMiembroService.findMiembrosByTermino(termino);
+        if(miembros == null && miembros.size() == 0){
+            logger.warn("mensaje", "no existe nunguna concidencia");
+            response.put("mensaje", "no existe nunguna concidencia");
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+        }else{
+            logger.info("se ejecuto la consulta de manera exitosa");
+            return new ResponseEntity<List<Miembros>>(miembros, HttpStatus.OK);
+
+        }
+        }catch (CannotCreateTransactionException e){
+            response = this.getTransactionExepcion(response, e);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+
+        }catch (DataAccessException e){
+            response = this.getDataAccessException(response, e);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+
+        }
+    }
+
+
+
     private Map<String, Object> getTransactionExepcion(Map<String,Object> response, CannotCreateTransactionException e){
         logger.error("Error al momento de conectarse a la base de datos");
         response.put("mensajee", "error al moneotno de contectarse a la");

@@ -40,4 +40,9 @@ public class MiembroserviceSimpl implements IMiembroService{
     public void delete(Miembros miembros) {
         this.iMiembrosDao.delete(miembros);
     }
+
+    @Override
+    public List<Miembros> findMiembrosByTermino(String termino) {
+        return this.iMiembrosDao.findMiembrosByTermino(termino);  //vamos a buscar las carreras que empiecen con una letra en especifico
+    }
 }
