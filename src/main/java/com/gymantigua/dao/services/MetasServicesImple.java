@@ -41,4 +41,9 @@ public class MetasServicesImple implements IMetasServices {
     public void delete(Metas metas) {
         this.iMetasDao .delete(metas);
     }
+
+    @Override
+    public List<Metas> findMetasByTermino(String termino) {
+        return this.iMetasDao.findMetasByTermino(termino);
+    }
 }

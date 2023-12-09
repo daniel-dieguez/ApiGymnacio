@@ -13,4 +13,5 @@ public interface IMetasServices {
     public Metas findById(String id_atleta);
     public Metas save (Metas metas);
     public void delete(Metas metas);
+    public List<Metas> findMetasByTermino (String termino);
 }

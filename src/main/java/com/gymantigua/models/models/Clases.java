@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -31,6 +32,8 @@ public class Clases implements Serializable {
     private String precio;
     @Column(name = "dia_semana")
     private String dia_semana;
+
+    private List<Pagos>pagos;
 
 
 

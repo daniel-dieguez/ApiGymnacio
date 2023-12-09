@@ -22,8 +22,6 @@ public class MiembrosDTO implements Serializable {
    private String objetivo;
     @NotEmpty(message = "Recuerda que genero hay dos papi")
     private String genero;
-    @NotEmpty(message = "Recuerda que hay que pagar mensualidad ")
-    private String mensualidad;
 
 
 

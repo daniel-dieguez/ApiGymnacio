@@ -111,26 +111,58 @@ public class MetasControllers {
         }
     }
 
-    @PostMapping  //recuerda que el post es para agregar
-    public ResponseEntity<?> create (@Valid @RequestBody MetasDTO value, BindingResult result){//el bindingresulta para valdiad el campo de Dto //el body lo podremos ver en la parte del post
+
+    @PutMapping("{atletaId}")
+    public ResponseEntity<?>update(@Valid @RequestBody MetasDTO value, BindingResult result, @PathVariable String atletaId) {
         Map<String, Object> response = new HashMap<>();
-        if(result.hasErrors() == true){ //.hasError para ver los errores
-            List<String> errores = result.getFieldErrors().stream().map(error -> error.getDefaultMessage())
-                    .collect(Collectors.toList()); // getFielError me enlistara los campos que se encuentraron errores, El collector nos ayuda a enlistar lso errorres PREGUNTAR A CHATGPT
-            response.put("errores", errores);
-            logger.info("se encontraron errores al momento de validar");
+        if (result.hasErrors()) {
+            List<String> errores = result.getFieldErrors().stream().map(error -> error.getDefaultMessage()).collect(Collectors.toList());
+            response.put("eorrres", errores);
+            logger.info("Se encotraron errores en la peticion ");
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
         try {
-            Metas metas = new Metas();
-            metas.setId_atleta(UUID.randomUUID().toString());
-            metas.setObjetivo(value.getObjetivo());
-            this.iMetasServices.save(metas);
-            logger.info("se acaba de creaer un nuevo miembro");
-            response.put("mensaje", "Un nuevo miembro fue creado con exito ");
-            response.put("Meta ", metas);
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+            Metas metas = this.iMetasServices.findById(atletaId);
+            if (metas == null) {
+                response.put("mensaje", "el nuevo miebro con el id".concat(atletaId).concat("no existe"));
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+            } else {
+                metas.setObjetivo(value.getObjetivo());
+                this.iMetasServices.save(metas);
+                response.put("mensaje", "la meta fue actualizado");
+                response.put("Metas ", metas);
+                logger.info("el miebro fue actualizada con exito ");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+            }
 
+
+        } catch (CannotCreateTransactionException e) {
+            response = this.getTransactionExepcion(response, e);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+
+        } catch (DataAccessException e) {
+            response = this.getDataAccessException(response, e);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+
+        }
+    }
+
+
+    @DeleteMapping("/{atletaId}")
+    public ResponseEntity<?> delete(@PathVariable String atletaId){
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Metas metas = this.iMetasServices.findById(atletaId);
+            if(metas == null){
+                response.put("mensaje", "El miembro con el Id".concat(atletaId).concat("no existe"));
+                return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
+            }else {
+                this.iMetasServices.delete(metas);
+                response.put("mensaje","el miembro con el id".concat(atletaId).concat("fue eliminado "));
+                response.put("metas ",metas);
+                logger.info("El miembro fue eliminada con exito");
+                return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
+            }
         }catch (CannotCreateTransactionException e){
             response = this.getTransactionExepcion(response, e);
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
@@ -147,8 +179,35 @@ public class MetasControllers {
 
 
 
+    @GetMapping("/search")
+    public ResponseEntity<?> ListarNombrePorTerminino(@RequestParam("termino") String termino){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            List<Metas> metas = this.iMetasServices.findMetasByTermino(termino);
+            if(metas == null && metas.size() == 0){
+                logger.warn("mensaje", "no existe nunguna concidencia");
+                response.put("mensaje", "no existe nunguna concidencia");
+                return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+            }else{
+                logger.info("se ejecuto la consulta de manera exitosa");
+                return new ResponseEntity<List<Metas>>(metas, HttpStatus.OK);
 
-    private Map<String, Object> getTransactionExepcion(Map<String,Object> response, CannotCreateTransactionException e){
+            }
+        }catch (CannotCreateTransactionException e){
+            response = this.getTransactionExepcion(response, e);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+
+        }catch (DataAccessException e){
+            response = this.getDataAccessException(response, e);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.SERVICE_UNAVAILABLE);
+
+        }
+    }
+
+
+
+
+        private Map<String, Object> getTransactionExepcion(Map<String,Object> response, CannotCreateTransactionException e){
         logger.error("Error al momento de conectarse a la base de datos");
         response.put("mensajee", "error al moneotno de contectarse a la");
         response.put("error", e.getMessage().concat(":").concat(e.getMostSpecificCause().getMessage()));

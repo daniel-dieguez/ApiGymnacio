@@ -41,4 +41,9 @@ public class PagosServiceSimpl implements  IPagosService{
         this.iPagosDao.delete(pagos);
 
     }
+
+    @Override
+    public List<Pagos> findPagosByTermino(String termino) {
+        return this.iPagosDao.findPagosByTermino(termino);
+    }
 }

@@ -127,7 +127,6 @@ public class MiembrosController {
           miembros.setCumpleanos(value.getCumpleanos());   // Analizcemos el get, este viene del entities miembrosDTO
            miembros.setTelefono(value.getTelefono());
            miembros.setObjetivo(value.getObjetivo());
-           miembros.setMensualidad(value.getMensualidad());
             this.iMiembroService.save(miembros);
             logger.info("se acaba de creaer un nuevo miembro");
             response.put("mensaje", "Un nuevo miembro fue creado con exito ");
@@ -210,7 +209,7 @@ public class MiembrosController {
 
 
 
-    // query params para la creacion de parametros de busqueda
+    // query params para la creacion de parametros de busqueda un "search
 
     @GetMapping("/search")
     public ResponseEntity<?> ListarNombrePorTerminino(@RequestParam("termino") String termino){

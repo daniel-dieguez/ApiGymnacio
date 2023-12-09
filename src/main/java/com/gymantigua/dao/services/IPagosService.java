@@ -13,6 +13,8 @@ public interface IPagosService {
     public Pagos findById(String id_pago);
     public Pagos save (Pagos pagos);
     public void delete(Pagos pagos);
+    public List<Pagos> findPagosByTermino(String termino);
+
 
 
 
