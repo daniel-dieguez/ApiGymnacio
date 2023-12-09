@@ -1,0 +1,558 @@
+{
+	"info": {
+		"_postman_id": "bd300d9b-6581-441b-afa0-dd4f17db235d",
+		"name": "Sistema backend Gym",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24017973"
+	},
+	"item": [
+		{
+			"name": "GimnacioAntigua",
+			"item": [
+				{
+					"name": "Miembros",
+					"item": [
+						{
+							"name": "01 Lista miembros",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/miembros",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										"miembros"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "02 Listar por pagina",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/miembros/page/0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										"miembros",
+										"page",
+										"0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "03 Buscar Id miebro",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/miembros/9a7bdfa2-8713-11ee-a2c9-0242ac110002",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										"miembros",
+										"9a7bdfa2-8713-11ee-a2c9-0242ac110002"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "04 Agregar un miembro",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n        \"cumpleanos\": \"2010-05-02\",\r\n        \"nombre\": \"pedro   \",\r\n        \"telefono\": \"32245615\",\r\n        \"genero\": \"Masculino\",\r\n        \"mensualidad\": \"230\",\r\n        \"id_clase\": null,\r\n        \"objetivo\": \"Definicion\"\r\n     \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/miembros",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										"miembros"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "05 Acualizacion",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \r\n        \"cumpleanos\": \"2010-05-02\",\r\n        \"nombre\": \"pedro   \",\r\n        \"telefono\": \"32245615\",\r\n        \"genero\": \"Masculino\",\r\n        \"mensualidad\": \"230\",\r\n        \"id_clase\": null,\r\n        \"objetivo\": \"Definicion\"\r\n     \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/miembros/ea36c19b-08bb-40d0-bb25-4ac76dbd138c",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										"miembros",
+										"ea36c19b-08bb-40d0-bb25-4ac76dbd138c"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "05 Elimar",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/miembros/f7203046-d156-4db3-b91a-f6b9a7969b60",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										"miembros",
+										"f7203046-d156-4db3-b91a-f6b9a7969b60"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "07 buscar termino",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/miembros/search?termino=a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										"miembros",
+										"search"
+									],
+									"query": [
+										{
+											"key": "termino",
+											"value": "a"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Entrenadores",
+					"item": [
+						{
+							"name": "01 Listar entrenadores",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v3/entrenadores",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v3",
+										"entrenadores"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "02 Enlistar por paginas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v3/entrenadores",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v3",
+										"entrenadores"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "03 Buscar por Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v3/entrenadores",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v3",
+										"entrenadores"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "04 Agregar entrenador",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v3/entrenadores",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v3",
+										"entrenadores"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "04 Agregar entrenador Copy",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v3/entrenadores/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v3",
+										"entrenadores",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "04 Agregar entrenador Copy 2",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v3/entrenadores/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v3",
+										"entrenadores",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Pagos",
+					"item": [
+						{
+							"name": "01Listar Pagos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/pagos",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										"pagos"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "02 Listar por pagina",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/pagos/page/0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										"pagos",
+										"page",
+										"0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "03 Buscar por Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/pagos/page/0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										"pagos",
+										"page",
+										"0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "04  Agregar pago",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "05 Actualizar pago",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "06 Eliminar",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v2/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v2",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Metas",
+					"item": [
+						{
+							"name": "01 En listar metas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v6/metas",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v6",
+										"metas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "02 Listar por pagina",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v6/metas/page/0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v6",
+										"metas",
+										"page",
+										"0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "03 Buscar Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v6/metas/9a7bdfa2-8713-11ee-a2c9-0242ac110002",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v6",
+										"metas",
+										"9a7bdfa2-8713-11ee-a2c9-0242ac110002"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "04 Acutalizar meta",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:9000/gimnacio/v6/metas/9a7bdfa2-8713-11ee-a2c9-0242ac110002",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9000",
+									"path": [
+										"gimnacio",
+										"v6",
+										"metas",
+										"9a7bdfa2-8713-11ee-a2c9-0242ac110002"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
